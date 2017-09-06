@@ -3,23 +3,24 @@ if(!empty($_POST))
 {
 	require('isRecaptchaValid.php');
 
-	if(isset($_POST['content']) AND !empty($_POST['content']))
+	if( // Si les champs ont été envoyés par le client et qu'ils ne sont pas vide
+    isset($_POST['email']) && !empty($_POST['email']) 
+    && $_POST['pseudo'] && !empty($_POST['pseudo']) 
+    && $_POST['password'] && !empty($_POST['password']))
 	{
-			//ici code habituel de verif du contenu
-	}
+        // Si le captcha est invalide afficher un message d'erreur en dessous du formulaire
+        if(!isRecaptchaValid($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']))
+        {
+            $errors[] = 'Captcha Invalide!';
+        }
+        else
+        {
+            
+        }
+    }
 	else
 	{
-		$errors[] = 'Remplissez le champ content';
-	}
-
-	if(!isRecaptchaValid($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']))
-	{
-		$errors[] = 'Captcha Invalide!';
-	}
-
-	if(!isset($errors))
-	{
-		$success = 'ok';
+		$errors[] = 'Remplissez tous les champs.';
 	}
 }
 
@@ -78,13 +79,14 @@ if(!empty($_POST))
                                             <div class="6u">                                               <input type="email" name="email" placeholder="Email" />
                                             </div>
                                             <div class="6u">
-                                               <input type="email" name="confirm-email" placeholder="Confirmation d'email" />
+                                               <input type="text" name="pseudo" placeholder="Pseudo" />
+
                                             </div>
                                             <div class="6u">
-                                               <input type="text" name="pseudo" placeholder="Pseudo" />
+                                                <input type="password" name="password" placeholder="Mot de passe" />
                                             </div>                                
                                                <div class="6u">
-                                                <input type="password" name="password" placeholder="Mot de passe" />
+                                                <input type="password" name="password-confirm" placeholder="Confirmation du mot de passe" />
                                             </div>    
                                             
                                             <!-- Captcha -->
@@ -104,13 +106,14 @@ if(isset($errors))
 {
 	foreach($errors as $error)
 	{
-		echo $error;
+		echo $error.'<br>';
 	}
 }
         
 if(isset($success))
 {
-	echo $success;
+    foreach($success as $ok)
+	echo $ok.'<br>';
 }
 ?>
 

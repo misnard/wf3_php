@@ -21,12 +21,12 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="#">BLOG D'UNE BOBO</a></h1>
+						<h1><a href="index.php">BLOG D'UNE BOBO</a></h1>
 						<nav class="links">
 							<ul>
-								<li><a href="#">Connexion</a></li>
-								<li><a href="#">Inscription</a></li>
-								<li><a href="#">Profil</a></li>
+								<li><a href="connexion.php">Connexion</a></li>
+								<li><a href="inscription.php">Inscription</a></li>
+								<li><a href="profil.php">Profil</a></li>
 								<li><a href="#">Administration</a></li>
 								<li><a href="#">Déconnexion</a></li>
 							</ul>
@@ -89,7 +89,7 @@
 						<!-- Actions -->
 							<section>
 								<ul class="actions vertical">
-									<li><a href="#" class="button big fit">Se connecter</a></li>
+									<li><a href="connexion.php" class="button big fit">Se connecter</a></li>
 								</ul>
 							</section>
 

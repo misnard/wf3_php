@@ -49,13 +49,17 @@ if(!empty($_POST))
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="#">BLOG D'UNE BOBO</a></h1>
+						<h1><a href="index.php">BLOG D'UNE BOBO</a></h1>
 						<nav class="links">
 							<ul>
 								<li><a href="connexion.php">Connexion</a></li>
 								<li><a href="inscription.php">Inscription</a></li>
-								<li><a href="#">Profil</a></li>
-								<li><a href="#">Administration</a></li>
+
+								<li><a href="profil.php">Profil</a></li>
+
+								
+
+								<li><a href="administration.php">Administration</a></li>
 								<li><a href="#">Déconnexion</a></li>
 							</ul>
 						</nav>
@@ -117,17 +121,7 @@ if(isset($success))
 }
 ?>
 
-				<!-- Footer -->
-					<section id="footer">
-						<ul class="icons">
-							<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
-							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-                        <p class="copyright">&copy; Blog d'une bobo <?php echo date('Y'); ?></p>
-					</section>
+				
 
 			</div>
 

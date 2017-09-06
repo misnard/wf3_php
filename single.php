@@ -27,7 +27,7 @@
 								<li><a href="connexion.php">Connexion</a></li>
 								<li><a href="inscription.php">Inscription</a></li>
 								<li><a href="profil.php">Profil</a></li>
-								<li><a href="#">Administration</a></li>
+								<li><a href="administration.php">Administration</a></li>
 								<li><a href="#">Déconnexion</a></li>
 							</ul>
 						</nav>

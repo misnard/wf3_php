@@ -89,7 +89,7 @@
 						<!-- Actions -->
 							<section>
 								<ul class="actions vertical">
-									<li><a href="#" class="button big fit">Se connecter</a></li>
+									<li><a href="connexion.php" class="button big fit">Se connecter</a></li>
 								</ul>
 							</section>
 

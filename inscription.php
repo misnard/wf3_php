@@ -1,6 +1,27 @@
 <?php
+if(!empty($_POST))
+{
+	require('isRecaptchaValid.php');
 
+	if(isset($_POST['content']) AND !empty($_POST['content']))
+	{
+			//ici code habituel de verif du contenu
+	}
+	else
+	{
+		$errors[] = 'Remplissez le champ content';
+	}
 
+	if(!isRecaptchaValid($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']))
+	{
+		$errors[] = 'Captcha Invalide!';
+	}
+
+	if(!isset($errors))
+	{
+		$success = 'ok';
+	}
+}
 
 ?>
 <!DOCTYPE HTML>
@@ -18,6 +39,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <script src="https://www.google.com/recaptcha/api.js"></script>
 	</head>
 	<body class="single">
 
@@ -29,8 +51,8 @@
 						<h1><a href="#">BLOG D'UNE BOBO</a></h1>
 						<nav class="links">
 							<ul>
-								<li><a href="#">Connexion</a></li>
-								<li><a href="#">Inscription</a></li>
+								<li><a href="connexion.php">Connexion</a></li>
+								<li><a href="inscription.php">Inscription</a></li>
 								<li><a href="#">Profil</a></li>
 								<li><a href="#">Administration</a></li>
 								<li><a href="#">Déconnexion</a></li>
@@ -51,83 +73,46 @@
 						</nav>
 					</header>
 
-				<!-- Menu -->
-					<section id="menu">
+                <form method="post" action="#">
+                                        <div class="row uniform">
+                                            <div class="6u">                                               <input type="email" name="email" placeholder="Email" />
+                                            </div>
+                                            <div class="6u">
+                                               <input type="email" name="confirm-email" placeholder="Confirmation d'email" />
+                                            </div>
+                                            <div class="6u">
+                                               <input type="text" name="pseudo" placeholder="Pseudo" />
+                                            </div>                                
+                                               <div class="6u">
+                                                <input type="password" name="password" placeholder="Mot de passe" />
+                                            </div>    
+                                            
+                                            <!-- Captcha -->
+                                            <div class="6u">
+                                                <div class="g-recaptcha" data-sitekey="6Lc9SS4UAAAAAFUTghLqVMQluTzujXUlUP821k2g"></div>
 
-						<!-- Search -->
-							<section>
-								<form class="search" method="get" action="#">
-									<input type="text" name="query" placeholder="Search" />
-								</form>
-							</section>
-
-						<!-- Links -->
-							<section>
-								<ul class="links">
-									<li>
-										<a href="#">
-											<h3>Lorem ipsum</h3>
-											<p>Feugiat tempus veroeros dolor</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Dolor sit amet</h3>
-											<p>Sed vitae justo condimentum</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Feugiat veroeros</h3>
-											<p>Phasellus sed ultricies mi congue</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Etiam sed consequat</h3>
-											<p>Porta lectus amet ultricies</p>
-										</a>
-									</li>
-								</ul>
-							</section>
-
-						<!-- Actions -->
-							<section>
-								<ul class="actions vertical">
-									<li><a href="#" class="button big fit">Se connecter</a></li>
-								</ul>
-							</section>
-
-					</section>
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Post -->
-							<article class="post">
-								<header>
-									<div class="title">
-										<h2><a href="#">Magna sed adipiscing</a></h2>
-										<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
-									</div>
-									<div class="meta">
-										<time class="published" datetime="2015-11-01">November 1, 2015</time>
-										<a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
-									</div>
-								</header>
-								<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-								<p>Nunc quis dui scelerisque, scelerisque urna ut, dapibus orci. Sed vitae condimentum lectus, ut imperdiet quam. Maecenas in justo ut nulla aliquam sodales vel at ligula. Sed blandit diam odio, sed fringilla lectus molestie sit amet. Praesent eu tortor viverra lorem mattis pulvinar feugiat in turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ullamcorper tellus sit amet mattis dignissim. Phasellus ut metus ligula. Curabitur nec leo turpis. Ut gravida purus quis erat pretium, sed pellentesque massa elementum. Fusce vestibulum porta augue, at mattis justo. Integer sed sapien fringilla, dapibus risus id, faucibus ante. Pellentesque mattis nunc sit amet tortor pellentesque, non placerat neque viverra. </p>
-								<footer>
-									<ul class="stats">
-										<li><a href="#">General</a></li>
-										<li><a href="#" class="icon fa-heart">28</a></li>
-										<li><a href="#" class="icon fa-comment">128</a></li>
-									</ul>
-								</footer>
-							</article>
-
-					</div>
+                                            </div>
+                                
+                                                <ul class="actions">
+                                                    <li><input type="submit" value="S'inscrire" /></li>
+                                                    <li><input type="reset" value="Reset" /></li>
+                                                </ul>
+                                            </div>
+                                    </form>
+<?php
+if(isset($errors))
+{
+	foreach($errors as $error)
+	{
+		echo $error;
+	}
+}
+        
+if(isset($success))
+{
+	echo $success;
+}
+?>
 
 				<!-- Footer -->
 					<section id="footer">
@@ -138,7 +123,7 @@
 							<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
 							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
 						</ul>
-						<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+                        <p class="copyright">&copy; Blog d'une bobo <?php echo date('Y'); ?></p>
 					</section>
 
 			</div>

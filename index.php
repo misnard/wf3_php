@@ -1,28 +1,8 @@
 <?php 
-
 session_start();
-
-
-
-
 include('include/display_art.php');
-
 include('include/display_art_min.php');
-
-
-
-
-
-
-
-
-
-
 ?>
-
-
-
-
 
 <!DOCTYPE HTML>
 <!--
@@ -97,14 +77,18 @@ include('include/display_art_min.php');
 
 		<!-- Main -->
 		<div id="main">
-			<?php display_articles(); ?>
+			<?php
+				if(isset($_GET['p']) && !empty($_GET['p'])) {
+					$p_max = display_articles($_GET['p']);
+				} 
+				else {
+					$p_max = display_articles("1");
+				}
+			?>
 
 			<!-- Pagination -->
 			<ul class="actions pagination">
-				<li><a href="#" class="button big previous">Première Page</a></li>
-				<li><a href="#" class="button big previous">Page précédente</a></li>
-				<li><a href="#" class="button big next">Page suivante</a></li>
-				<li><a href="#" class="button big next">Dernière Page</a></li>
+				<?php display_pagination($p_max, $_GET['p']); ?>
 			</ul>
 
 		</div>

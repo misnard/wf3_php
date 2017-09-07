@@ -17,6 +17,7 @@ include('include/display_art_min.php');
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
@@ -68,24 +69,24 @@ include('include/display_art_min.php');
 		<!-- Main -->
 		<div id="main">
 			<?php
-				if(isset($_GET['p']) && !empty($_GET['p'])) {
-					$p_max = display_articles($_GET['p']);
-				} 
-				else {
-					$p_max = display_articles("1");
-				}
+			if(isset($_GET['p']) && !empty($_GET['p'])) {
+				$p_max = display_articles($_GET['p']);
+			} 
+			else {
+				$p_max = display_articles("1");
+			}
 			?>
 
 			<!-- Pagination -->
 			<ul class="actions pagination">
-			
+				
 				<?php 
-					if(isset($_GET['p']) && !empty($_GET['p'])) {
-						$p_max = display_pagination($p_max, $_GET['p']);
-					} 
-					else {
-						$p_max = display_pagination($p_max, "1");
-					} 
+				if(isset($_GET['p']) && !empty($_GET['p'])) {
+					$p_max = display_pagination($p_max, $_GET['p']);
+				} 
+				else {
+					$p_max = display_pagination($p_max, "1");
+				} 
 				?>
 			</ul>
 

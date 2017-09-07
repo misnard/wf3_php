@@ -39,12 +39,12 @@ function display_articles($page)
                     <article class="post">
                         <header>
                             <div class="title">
-                                <h2><a href="#"><?= htmlentities($article['title']) ?></a></h2>
-                                <p></p>
+                                <h2><?= htmlentities($article['title']) ?></h2>
+                                
                             </div>
                             <div class="meta">
                                 <time class="published" datetime="<?= htmlentities($article['posted']); ?>"><?= htmlentities($article['posted']); ?></time>
-                                <a href="#" class="author"><span class="name"><?= htmlentities($article['author']); ?></span><img src="images/avatar.jpg" alt="" /></a>
+                                <span class="name"><?= htmlentities($article['author']); ?></span><img src="images/avatar.jpg" alt="" />
                             </div>
                         </header>
                         <a href="post.php?id=<?= htmlentities($article['id']); ?>" class="image featured"><img src="images/<?= htmlentities($article['picture']); ?>" alt="" /></a>

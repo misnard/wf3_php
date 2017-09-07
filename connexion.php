@@ -41,7 +41,7 @@ if(isset($_POST['singlebutton'])){
 		if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['password'])){
             // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
 			$errors[] = '<div class="alert alert-danger"><strong>Mote de passe invalide</strong></div>';
-            
+			
 		}
 	} else {
         // Si le champ n'existe pas ou est vide, on créer une erreur dans l'array $errors
@@ -125,6 +125,7 @@ if(isset($_POST['singlebutton'])){
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
@@ -140,7 +141,7 @@ if(isset($_POST['singlebutton'])){
 
 			include ('include/menu.php')
 
-			 ?>
+			?>
 			<nav class="main">
 				<ul>
 					

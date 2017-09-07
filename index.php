@@ -111,6 +111,7 @@ include('include/display_art_min.php');
 			<!-- About -->
 			<section class="blurb">
 				<h2>A prpopos</h2>
+				<a href="https://www.youtube.com/watch?v=KG-q7vzxKY8">Ma chanson préférée</a>
 				<p>Voila ma vie, mon oeuvre, et bla bla bla bla !!</p>
 				
 			</section>

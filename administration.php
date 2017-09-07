@@ -78,10 +78,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 
 	if(isset($_POST['content']) AND !empty($_POST['content'])){
         // Vérification que le champ TITRE soit conforme à la regex
-		if(!preg_match('#^[a-z \'\-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9]{3,30}$#i', $_POST['content'])){
-            // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
-			$errors[] = '<div class="alert alert-danger"><strong>Contenu non valide</strong></div>';
-		}
+		
 	} else {
         // Si le champ n'existe pas ou est vide, on créer une erreur dans l'array $errors
 		$errors[] = '<div class="alert alert-warning"><strong>Veuillez renseigner le contenu de l\'article</strong></div>';
@@ -203,7 +200,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 			<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="#" class="button big fit">Se connecter</a></li>
+					<li><a href="connexion.php" class="button big fit">Se connecter</a></li>
 				</ul>
 			</section>
 

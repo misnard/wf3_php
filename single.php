@@ -85,18 +85,7 @@ include('include/display_art_min.php');
 				</ul>
 			</section>
 
-		</section>
-
-			</section>
-
-			<!-- Actions -->
-			<section>
-				<ul class="actions vertical">
-					<li><a href="#" class="button big fit">Se connecter</a></li>
-				</ul>
-			</section>
-
-		</section>
+		
 
 		<!-- Main -->
 		<div id="main">

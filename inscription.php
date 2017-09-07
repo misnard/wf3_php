@@ -12,7 +12,8 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
     isset($_POST['email']) && !empty($_POST['email']) 
     && $_POST['uname'] && !empty($_POST['uname']) 
     && $_POST['password'] && !empty($_POST['password'])
-    && $_POST['password-confirm'] && !empty($_POST['password-confirm']))
+    && $_POST['password-confirm'] && !empty($_POST['password-confirm'])
+    && $_POST['secret'] && !empty($_POST['secret']))
 	{
         // Si le captcha est invalide afficher un message d'erreur en dessous du formulaire
     if(!isRecaptchaValid($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']))
@@ -24,6 +25,17 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
     {
       $errors[] = 'Les mot de passe ne correspondent pas.';
     }
+        
+    if(isset($_POST['secret']) AND !empty($_POST['secret']))
+    {
+        // Vérification que le champ SECRET soit conforme à la regex
+        if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['secret']))
+        {
+            // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
+            $errors[] = '<div class="alert alert-danger"><strong>Question secrète non conforme</strong></div>';
+        }
+	}
+    
         if(!isset($errors)) // Connexion à la base de donnée avec un prepare et sécurisation des données contre les failles XSS
         {
 
@@ -31,11 +43,12 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
           include ('include/try_catch.php');
 
           $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $response = $bdd->prepare("INSERT INTO user(uname, email, password, admin) VALUES(?,?,?,?)");
+          $response = $bdd->prepare("INSERT INTO user(uname, email, password, secret, admin) VALUES(?,?,?,?,?)");
           $response->execute(array(
             $_POST['uname'],
             $_POST['email'],
             password_hash($_POST['password'], PASSWORD_BCRYPT),
+            $_POST['secret'],
             $admin = 0
             ));
 
@@ -140,6 +153,35 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
   <div class="6u">
     <input type="password" name="password-confirm" placeholder="Confirmation du mot de passe" />
   </div>    
+  <div class="6u">
+    <select name="value_secret">
+        <option disabled>
+        Question secrète
+        </option>
+        <option value="2">
+        Le lieu de naissance de ma mère ?
+        </option>
+        <option value="3">
+        Le nom de mon/ma meilleur(e) ami(e) d'enfance ?
+        </option>
+        <option value="4">
+        Deuxième prénom de mon père ?
+        </option>
+        <option value="5">
+        Nom de mon professeur préféré ?
+        </option>
+        <option value="6">
+        Mon héros d'enfance ?
+        </option>
+        <option value="7">
+        Le prénom de mon/ma petit(e) ami(e) de lycée ?
+        </option>
+    </select>
+  </div> 
+     
+   <div class="6u">
+     <input type="text" name="secret" placeholder="Réponse à la question">
+   </div>
 
   <!-- Captcha -->
   <div class="6u">

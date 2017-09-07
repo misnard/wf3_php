@@ -25,16 +25,16 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
     {
       $errors[] = 'Les mot de passe ne correspondent pas.';
     }
-        
+    
     if(isset($_POST['secret']) AND !empty($_POST['secret']))
     {
         // Vérification que le champ SECRET soit conforme à la regex
-        if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['secret']))
-        {
+      if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['secret']))
+      {
             // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
-            $errors[] = '<div class="alert alert-danger"><strong>Question secrète non conforme</strong></div>';
-        }
-	}
+        $errors[] = '<div class="alert alert-danger"><strong>Question secrète non conforme</strong></div>';
+      }
+    }
     
         if(!isset($errors)) // Connexion à la base de donnée avec un prepare et sécurisation des données contre les failles XSS
         {
@@ -79,6 +79,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
   <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
   <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
   <script src="https://www.google.com/recaptcha/api.js"></script>
@@ -99,31 +100,31 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
       <nav class="main">
        <ul>
         
-      <li class="menu">
-       <a class="fa-bars" href="#menu">Menu</a>
-     </li>
-   </ul>
- </nav>
-</header>
+        <li class="menu">
+         <a class="fa-bars" href="#menu">Menu</a>
+       </li>
+     </ul>
+   </nav>
+ </header>
 
-<!-- Menu -->
-    <section id="menu">
+ <!-- Menu -->
+ <section id="menu">
 
-      
+  
 
-      <!-- Links -->
-      <section>
-        <?php display_articles_min(); ?>
-      </section>
+  <!-- Links -->
+  <section>
+    <?php display_articles_min(); ?>
+  </section>
 
-      <!-- Actions -->
-      <section>
-        <ul class="actions vertical">
-          <li><a href="connexion.php" class="button big fit">Se connecter</a></li>
-        </ul>
-      </section>
+  <!-- Actions -->
+  <section>
+    <ul class="actions vertical">
+      <li><a href="connexion.php" class="button big fit">Se connecter</a></li>
+    </ul>
+  </section>
 
-    </section>
+</section>
 
 
 
@@ -145,36 +146,36 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
   </div>    
   <div class="6u">
     <select name="value_secret">
-        <option disabled>
+      <option disabled>
         Question secrète
-        </option>
-        <option value="2">
+      </option>
+      <option value="2">
         Le lieu de naissance de ma mère ?
-        </option>
-        <option value="3">
+      </option>
+      <option value="3">
         Le nom de mon/ma meilleur(e) ami(e) d'enfance ?
-        </option>
-        <option value="4">
+      </option>
+      <option value="4">
         Deuxième prénom de mon père ?
-        </option>
-        <option value="5">
+      </option>
+      <option value="5">
         Nom de mon professeur préféré ?
-        </option>
-        <option value="6">
+      </option>
+      <option value="6">
         Mon héros d'enfance ?
-        </option>
-        <option value="7">
+      </option>
+      <option value="7">
         Le prénom de mon/ma petit(e) ami(e) de lycée ?
-        </option>
+      </option>
     </select>
   </div> 
-     
-   <div class="6u">
-     <input type="text" name="secret" placeholder="Réponse à la question">
-   </div>
-
-  <!-- Captcha -->
+  
   <div class="6u">
+   <input type="text" name="secret" placeholder="Réponse à la question">
+ </div>
+
+ <!-- Captcha -->
+ <div class="6u">
    <label for "g-recaptcha">Merci de remplir le captcha</label>
    <div class="g-recaptcha" data-sitekey="6Lc9SS4UAAAAAFUTghLqVMQluTzujXUlUP821k2g"></div>
  </div>

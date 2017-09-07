@@ -98,12 +98,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
       ?>
       <nav class="main">
        <ul>
-        <li class="search">
-         <a class="fa-search" href="#search">Rechercher</a>
-         <form id="search" method="get" action="#">
-          <input type="text" name="query" placeholder="Rechercher" />
-        </form>
-      </li>
+        
       <li class="menu">
        <a class="fa-bars" href="#menu">Menu</a>
      </li>
@@ -114,12 +109,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 <!-- Menu -->
     <section id="menu">
 
-      <!-- Search -->
-      <section>
-        <form class="search" method="get" action="#">
-          <input type="text" name="query" placeholder="Search" />
-        </form>
-      </section>
+      
 
       <!-- Links -->
       <section>

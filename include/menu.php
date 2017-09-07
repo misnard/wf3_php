@@ -27,7 +27,7 @@
 
 		<li><a href="administration.php">
 			<?php 
-			if ($_SESSION['account']['admin'] == '1') {
+			if ($_SESSION['account']['admin'] == 'oui') {
 				echo "Administration";
 			} 
 			?>

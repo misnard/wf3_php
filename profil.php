@@ -94,7 +94,7 @@ include('include/display_art_min.php');
 				</ul>
 
 				<?php 
-				if ($_SESSION['account']['admin'] == '1') {
+				if ($_SESSION['account']['admin'] == 'oui') {
 					echo "Vous êtes administrateur";
 				} else {
 					echo "Vous n'êtes pas administrateur";

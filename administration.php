@@ -5,32 +5,59 @@ session_start();
 include('include/display_art_min.php');
 
 
-
-
-
-
 include ('include/try_catch.php');
 
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-if (isset($_GET['id']) && !empty($_GET['id'])) 
+if (isset($_GET['id']) && !empty($_GET['id'] && isset($_GET['delete']))) 
 {
 	if (filter_var($_GET['id'],FILTER_VALIDATE_INT)) {	
 		$supprimer = $bdd->prepare("DELETE FROM articles WHERE id=?");
 		$supprimer->execute(array(
 			filter_var($_GET['id'],FILTER_VALIDATE_INT )));
 		$supprimer->closeCursor(); 
-		$alertDanger ='<div class="alert alert-success"><strong>L\'article a bien été supprimé</strong></div>';
+		$errors[] ='<div class="alert alert-success"><strong>L\'article a bien été supprimé</strong></div>';
 		header('administration.php');
 	}
 }
+
+
+if (isset($_GET['id']) && !empty($_GET['id']) && isset($_GET['deleteuser'])) 
+{
+	if (filter_var($_GET['id'],FILTER_VALIDATE_INT)) {	
+		$supprimer = $bdd->prepare("DELETE FROM user WHERE id=?");
+		$supprimer->execute(array(
+			filter_var($_GET['id'],FILTER_VALIDATE_INT )));
+		$supprimer->closeCursor(); 
+		$errors[] ='<div class="alert alert-success"><strong>L\'utilisateur a bien été supprimé</strong></div>';
+		header('administration.php');
+	}
+}
+
+if (isset($_GET['admin']) && isset($_GET['id']) && !empty($_GET['id'])) 
+{
+	if (filter_var($_GET['id'],FILTER_VALIDATE_INT)) {	
+		$modifier = $bdd->prepare("UPDATE user SET admin=:admin WHERE id=:id");
+		$modifier->bindParam(":admin", $_GET['admin']);
+		$modifier->bindParam(":id", $_GET['id']);
+		$modifier->execute();		
+		$modifier->closeCursor(); 
+		$errors[] ='<div class="alert alert-success"><strong>Le status de l\'utilisateur a bien été modifié</strong></div>';
+		header('administration.php');
+	}
+}
+
+
 
 
 $response = $bdd->query('SELECT * FROM articles ORDER BY id');
 
 $articles = $response->fetchAll(PDO::FETCH_ASSOC);
 
+$response2 = $bdd->query('SELECT * FROM user ORDER BY id');
+
+$users = $response2->fetchAll(PDO::FETCH_ASSOC);
 
 
 
@@ -54,7 +81,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 
 	if(isset($_POST['content']) AND !empty($_POST['content'])){
         // Vérification que le champ TITRE soit conforme à la regex
-		if(!preg_match('#^[\sa-zA-Z0-9ÀÂÇÈÉÊËÎÔÙÛàâçèéêëîôöùû\.\(\)\[\]\"\'\-,;:\/!\?]{5,30}$#i', $_POST['content'])){
+		if(!preg_match('#^[a-z \'\-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9]{3,30}$#i', $_POST['content'])){
             // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
 			$errors[] = '<div class="alert alert-danger"><strong>Contenu non valide</strong></div>';
 		}
@@ -129,6 +156,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
@@ -219,7 +247,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 							<th><?php echo htmlspecialchars($data['posted']);?></th>
 							<th><?php echo htmlspecialchars($data['picture']);?></th>
 							<th><?php echo htmlspecialchars($data['author']);?></th>
-							<th><a href="administration.php?id=<?php echo htmlspecialchars($data['id']);?>" onclick="return" class="btn btn-danger">SUPPRIMER</a></th>
+							<th><a href="administration.php?id=<?php echo htmlspecialchars($data['id']);?>&delete=1" onclick="return" class="btn btn-danger">SUPPRIMER</a></th>
 						</tr>
 
 						<?php 
@@ -228,6 +256,45 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 					?>
 				</tbody>
 			</table>
+
+
+			<h2>Liste des utilisateurs</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Pseudo</th>
+						<th>Email</th>
+						<th>Admin</th>
+						<th>Supprimer compte</th>
+						<th>Modification des droits</th>
+					</tr>
+				</thead>
+
+				<?php 
+
+				foreach( $users as $data )
+				{
+					?>
+					<tbody>
+						<tr>
+							<th><?php echo htmlspecialchars($data['uname']);?></th>
+							<th><?php echo htmlspecialchars($data['email']);?></th>
+							<th><?php echo htmlspecialchars($data['admin']);?></th>
+							<th><a href="administration.php?id=<?php echo htmlspecialchars($data['id']);?>&deleteuser=1" onclick="return" class="btn btn-danger">SUPPRIMER</a></th>
+							<th>
+								<a href="administration.php?id=<?php echo htmlspecialchars($data['id']);?>&admin=non" name="simplemember" class="btn btn-warning">Simple membre</a>
+								<a href="administration.php?id=<?php echo htmlspecialchars($data['id']);?>&admin=oui" name="administrator" class="btn btn-warning">Administrateur</a>
+							</th>
+						</tr>
+
+						<?php 
+					}
+					$response->closeCursor();
+					?>
+				</tbody>
+			</table>
+
+
 
 			<h2>Ajout d'un article</h2>
 

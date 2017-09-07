@@ -49,7 +49,7 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
             $_POST['email'],
             password_hash($_POST['password'], PASSWORD_BCRYPT),
             $_POST['secret'],
-            $admin = 0
+            $admin = 'non'
             ));
 
           $success[] = 'Merci de vous êtes inscrit.';

@@ -53,16 +53,12 @@ $response = $bdd->query('SELECT * FROM articles ORDER BY id');
 
 $articles = $response->fetchAll(PDO::FETCH_ASSOC);
 
-<<<<<<< HEAD
+
 $response2 = $bdd->query('SELECT * FROM user ORDER BY id');
 
 $users = $response2->fetchAll(PDO::FETCH_ASSOC);
 
 
-
-
-=======
->>>>>>> 7e38e7b3b55f93371b66b13a2589697d3cfa67a3
 //AJOUT d'ARTICLES
 
 include('include/upload_file.php');

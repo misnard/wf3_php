@@ -1,26 +1,9 @@
-<?php 
-
+<?php
 session_start();
 
 include('include/display_art_min.php');
 
-
-
-
-// if (empty($e)) {
-// 	$dbh=$db=prepare("SELECT * FROM users WHERE email=:email");
-// 	$dbh->bindParam(":email", $_POST['email']);
-// 	$dbh->execute();
-// 	if ($data=$dbh->fetch()) {
-// 		if ($data==) {
-// 			# code...
-// 		}
-// 	}
-
-// }
-
-
-if(isset($_POST['singlebutton'])){
+if(!empty($_POST)){
 
     // Vérification que le champ EMAIL existe et n'est pas vide
 	if(isset($_POST['email']) AND !empty($_POST['email'])){
@@ -35,17 +18,21 @@ if(isset($_POST['singlebutton'])){
 	}
 
 
-    // Vérification que le champ PASSWORD existe et n'est pas vide
-	if(isset($_POST['password']) AND !empty($_POST['password'])){
+    // Vérification que le champ SECRET existe et n'est pas vide
+	if(isset($_POST['secret']) AND !empty($_POST['secret']))
+    {
         // Vérification que le champ PASSWORD soit conforme à la regex
-		if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['password'])){
+		if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['secret']))
+        {
             // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
-			$errors[] = '<div class="alert alert-danger"><strong>Mote de passe invalide</strong></div>';
+			$errors[] = '<div class="alert alert-danger"><strong>Réponse à la question secrète non conforme</strong></div>';
             
 		}
-	} else {
+	} 
+    else 
+    {
         // Si le champ n'existe pas ou est vide, on créer une erreur dans l'array $errors
-		$errors[] = '<div class="alert alert-warning"><strong>Veuillez inscrire le mot de passe</strong></div>';
+		$errors[] = '<div class="alert alert-warning"><strong>Veuillez inscrire la réponse à la question secrète</strong></div>';
 	}
 
 
@@ -57,13 +44,8 @@ if(isset($_POST['singlebutton'])){
 
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-
-
-
 		$email= ($_POST['email']);		//preparation des variables des champs 
-		$password= ($_POST['password']);
-
+		$secret= ($_POST['secret']);
 
 		$response = $bdd->prepare("SELECT * FROM user WHERE email= ?"); // ? = correspond à l'array donc $_POST email
 		$response->execute(				//requete préparé qui empeche les injection SQL
@@ -77,28 +59,20 @@ if(isset($_POST['singlebutton'])){
 
 		if ($response->rowCount()==1) {
 
-			if (password_verify($password, $infos['password'] )) {   //si le password rentré correspond a celui de la base sauvegardé dans l'array grace au fetch
-			$success = '<div class="alert alert-success"><strong>Vous êtes connecté ! <br><br> <a href="index.php">Retour à la page d\'accueil</a></strong></div>';
-			//Création de la session
-			$_SESSION['account'] = array(
-				'user' => $infos['uname'],
-				
-				'email' => $infos['email'],
-				'admin' => $infos['admin']
-				);
-
-			
-
-
-
+			if ($secret == $infos['secret']) {   //si le secret rentré correspond a celui de la base de donnée sauvegardé dans l'array grace au fetch
+			$success = 'Vous pouvez changer votre mot de passe';
+            header('Location: new_password2.php');
+            $_SESSION['editPassword'] = "editTrue";
+            $_SESSION['editEmail'] = $email;
+                
 
 		}else{
-			$errors[] = '<div class="alert alert-warning"><strong>Mot de passe invalide</strong></div><br>Vous pouvez réinitialiser votre mot de passe en <a href="new_password.php">cliquant ici</a>';
+			$errors[] = 'Réponse à la question secrète invalide';
 		}
 
 
 	}else{
-		$errors[] = '<div class="alert alert-warning"><strong>Ce compte n\'existe pas</strong></div>';
+		$errors[] = 'Ce compte n\'existe pas.';
 	}
 
 
@@ -183,22 +157,22 @@ if(isset($_POST['singlebutton'])){
 		<!-- Main -->
 		<div id="main">
 
-			<form method="post" action="connexion.php">
-				<h1>Connexion</h1>
+			<form method="POST" action="">
+				<h1>Changer le mot de passe</h1>
 				<div class="row uniform">
 
 					<div class="6u 12u$(xsmall)">
-						<input type="text" name="email" id="inputEmail" value="" placeholder="Email" />
+						<input type="text" name="email" placeholder="Email" />
 					</div>
 					<div class="6u$ 12u$(xsmall)">
-						<input type="password" name="password" id="inputPassword" value="" placeholder="Mot de passe" />
+						<input type="text" name="secret" placeholder="Réponse à la question secrète" />
 					</div>
 
 
 
 					<div class="12u$">
 						<ul class="actions">
-							<li><input type="submit" name="singlebutton" id="singlebutton" value="Se connecter" /></li><br>
+							<li><input type="submit" value="Réinitialiser" /></li><br>
 
 						</ul>
 					</div>
@@ -215,7 +189,6 @@ if(isset($_POST['singlebutton'])){
 			}
     // Si $success existe, on l'affiche
 			if(isset($success)){
-				echo 'Bienvenue '. htmlspecialchars($_SESSION['account']['user']).'!';
 				echo $success;
 			}
 			?>

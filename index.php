@@ -37,12 +37,7 @@ include('include/display_art_min.php');
 			
 			<nav class="main">
 				<ul>
-					<li class="search">
-						<a class="fa-search" href="#search">Search</a>
-						<form id="search" method="get" action="#">
-							<input type="text" name="query" placeholder="Search" />
-						</form>
-					</li>
+					
 					<li class="menu">
 						<a class="fa-bars" href="#menu">Menu</a>
 					</li>
@@ -53,12 +48,7 @@ include('include/display_art_min.php');
 		<!-- Menu -->
 		<section id="menu">
 
-			<!-- Search -->
-			<section>
-				<form class="search" method="get" action="#">
-					<input type="text" name="query" placeholder="Search" />
-				</form>
-			</section>
+			
 
 			<!-- Links -->
 			<section>
@@ -69,7 +59,7 @@ include('include/display_art_min.php');
 			<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="connexion.php" class="button big fit">Log In</a></li>
+					<li><a href="connexion.php" class="button big fit">Se connecter</a></li>
 				</ul>
 			</section>
 

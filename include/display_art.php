@@ -27,7 +27,7 @@ function display_articles($page)
                 $nombre_par_page = 5;
                 $offset = $p * $nombre_par_page;
                 
-                $dbh = $db->prepare("SELECT * FROM articles LIMIT :numb OFFSET :offset");
+                $dbh = $db->prepare("SELECT * FROM articles ORDER BY id DESC LIMIT :numb OFFSET :offset");
                 $dbh->bindParam(":offset", $offset, PDO::PARAM_INT);
                 $dbh->bindParam(":numb", $nombre_par_page, PDO::PARAM_INT);
                 $dbh->execute();

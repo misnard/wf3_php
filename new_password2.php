@@ -24,7 +24,7 @@ if(!empty($_POST))
 
             $dbh->execute();
             
-            $success = 'Votre mot de passe a été modifié<br><a href="index.php">Retour vers l\'accueil</a>';
+            $success = 'Votre mot de passe a été modifié<br><a href="index.php">Cliquez ici pour revenir à l\'accueil</a>';
 
         }
         else
@@ -50,6 +50,7 @@ if(!empty($_POST))
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 </head>
 <body class="single">
 
@@ -130,7 +131,8 @@ if(!empty($_POST))
 
 			<?php
     // Si $success existe, on l'affiche
-			if(isset($success)){
+			if(isset($success))
+            {
 				echo $success;
 			}
 			?>

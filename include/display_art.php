@@ -47,7 +47,7 @@ function display_articles($page)
                                 <a href="#" class="author"><span class="name"><?= htmlentities($article['author']); ?></span><img src="images/avatar.jpg" alt="" /></a>
                             </div>
                         </header>
-                        <a href="#" class="image featured"><img src="images/<?= htmlentities($article['picture']); ?>" alt="" /></a>
+                        <a href="post.php?id=<?= htmlentities($article['id']); ?>" class="image featured"><img src="images/<?= htmlentities($article['picture']); ?>" alt="" /></a>
                         <p><?= htmlentities($article['content']); ?></p>
                         <footer>
                             <ul class="actions">

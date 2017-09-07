@@ -4,11 +4,6 @@ session_start();
 
 include('include/display_art_min.php');
 
-
-
-
-
-
 include ('include/try_catch.php');
 
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,10 +25,6 @@ if (isset($_GET['id']) && !empty($_GET['id']))
 $response = $bdd->query('SELECT * FROM articles ORDER BY id');
 
 $articles = $response->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-
 
 //AJOUT d'ARTICLES
 
@@ -88,11 +79,11 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
         	include ('include/try_catch.php');
 
         	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        	$response = $bdd->prepare("INSERT INTO articles(title, content, author, picture) VALUES(?,?,?,?)");
+        	$response = $bdd->prepare("INSERT INTO articles(title, content, posted, author, picture) VALUES(?,?,?,?,?)");
         	$response->execute(array(
         		$_POST['title'],
         		$_POST['content'],
-
+				date("d-m-Y"),
         		$_POST['author'],
         		$_POST['monFichier'],
 

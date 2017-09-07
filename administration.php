@@ -1,7 +1,7 @@
 <?php 
 
 session_start();
-
+if (isset($_SESSION['account']) && $_SESSION['account']['admin'] == 'oui') {
 include('include/display_art_min.php');
 include ('include/try_catch.php');
 
@@ -342,3 +342,9 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
 
 </body>
 </html>
+
+		<?php }
+		else
+		{
+			echo "Vous n'etes pas connecter ou pas administrateur !";
+		} ?>

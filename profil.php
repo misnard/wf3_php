@@ -3,7 +3,7 @@
 session_start();
 
 include('include/display_art_min.php');
-
+if (isset($_SESSION['account'])) {
 ?>
 
 
@@ -110,3 +110,10 @@ include('include/display_art_min.php');
 
 </body>
 </html>
+<?php
+}
+else
+{
+	echo "Vous n'etes pas connecter !";
+}
+?>

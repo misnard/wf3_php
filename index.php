@@ -88,7 +88,15 @@ include('include/display_art_min.php');
 
 			<!-- Pagination -->
 			<ul class="actions pagination">
-				<?php display_pagination($p_max, $_GET['p']); ?>
+			
+				<?php 
+					if(isset($_GET['p']) && !empty($_GET['p'])) {
+						$p_max = display_pagination($p_max, $_GET['p']);
+					} 
+					else {
+						$p_max = display_pagination($p_max, "1");
+					} 
+				?>
 			</ul>
 
 		</div>

@@ -3,11 +3,6 @@
 session_start();
 
 include('include/display_art_min.php');
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 7e38e7b3b55f93371b66b13a2589697d3cfa67a3
 include ('include/try_catch.php');
 
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

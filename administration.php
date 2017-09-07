@@ -4,7 +4,10 @@ session_start();
 
 include('include/display_art_min.php');
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7e38e7b3b55f93371b66b13a2589697d3cfa67a3
 include ('include/try_catch.php');
 
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -55,6 +58,7 @@ $response = $bdd->query('SELECT * FROM articles ORDER BY id');
 
 $articles = $response->fetchAll(PDO::FETCH_ASSOC);
 
+<<<<<<< HEAD
 $response2 = $bdd->query('SELECT * FROM user ORDER BY id');
 
 $users = $response2->fetchAll(PDO::FETCH_ASSOC);
@@ -62,6 +66,8 @@ $users = $response2->fetchAll(PDO::FETCH_ASSOC);
 
 
 
+=======
+>>>>>>> 7e38e7b3b55f93371b66b13a2589697d3cfa67a3
 //AJOUT d'ARTICLES
 
 include('include/upload_file.php');
@@ -115,11 +121,11 @@ if(!empty($_POST)) // Si les données du formulaire ne sont pas vides
         	include ('include/try_catch.php');
 
         	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        	$response = $bdd->prepare("INSERT INTO articles(title, content, author, picture) VALUES(?,?,?,?)");
+        	$response = $bdd->prepare("INSERT INTO articles(title, content, posted, author, picture) VALUES(?,?,?,?,?)");
         	$response->execute(array(
         		$_POST['title'],
         		$_POST['content'],
-
+				date("d-m-Y"),
         		$_POST['author'],
         		$_POST['monFichier'],
 

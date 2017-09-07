@@ -12,7 +12,7 @@ function display_articles()
     }
     if(empty($e))
     {
-        $dbh = $db->prepare("SELECT * FROM articles");
+        $dbh = $db->prepare("SELECT * FROM articles ORDER BY id DESC");
         $dbh->execute();
         $articles = $dbh->fetchAll();
 

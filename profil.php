@@ -2,26 +2,9 @@
 
 session_start();
 
-
-
-
-include('include/display_art.php');
-
 include('include/display_art_min.php');
 
-
-
-
-
-
-
-
-
-
 ?>
-
-
-
 
 
 <!DOCTYPE HTML>
@@ -40,27 +23,25 @@ include('include/display_art_min.php');
 	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
-<body>
+<body class="single">
 
 	<!-- Wrapper -->
 	<div id="wrapper">
 
 		<!-- Header -->
 		<header id="header">
-			<h1><a href="index.php">BLOG D'UN BOBO</a></h1>
-
+			<h1><a href="index.php">BLOG D'UNE BOBO</a></h1>
 			<?php 
 
 			include ('include/menu.php')
 
 			?>
-			
 			<nav class="main">
 				<ul>
 					<li class="search">
-						<a class="fa-search" href="#search">Search</a>
+						<a class="fa-search" href="#search">Rechercher</a>
 						<form id="search" method="get" action="#">
-							<input type="text" name="query" placeholder="Search" />
+							<input type="text" name="query" placeholder="Rechercher" />
 						</form>
 					</li>
 					<li class="menu">
@@ -82,14 +63,13 @@ include('include/display_art_min.php');
 
 			<!-- Links -->
 			<section>
-
 				<?php display_articles_min(); ?>
 			</section>
 
 			<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="connexion.php" class="button big fit">Log In</a></li>
+					<li><a href="#" class="button big fit">Se connecter</a></li>
 				</ul>
 			</section>
 
@@ -97,44 +77,36 @@ include('include/display_art_min.php');
 
 		<!-- Main -->
 		<div id="main">
-			<?php display_articles(); ?>
 
-			<!-- Pagination -->
-			<ul class="actions pagination">
-				<li><a href="#" class="button big previous">Première Page</a></li>
-				<li><a href="#" class="button big previous">Page précédente</a></li>
-				<li><a href="#" class="button big next">Page suivante</a></li>
-				<li><a href="#" class="button big next">Dernière Page</a></li>
-			</ul>
+			<!-- Information de compte -->
+			<article class="post">
+				<header>
+					<div class="title">
+						<h2> <?php echo htmlspecialchars($_SESSION['account']['user']) ?></h2>
+						<h1>Votre Profil</h1>
+					</div>
+				</header>
+				
+				<p>Information de votre compte</p>
+				<ul>
+					<li>Pseudo : <?php echo htmlspecialchars($_SESSION['account']['user']) ?></li>
+					<li>Email : <?php echo htmlspecialchars($_SESSION['account']['email']) ?></li>
+				</ul>
+
+				<?php 
+				if ($_SESSION['account']['admin'] == '1') {
+					echo "Vous êtes administrateur";
+				} else {
+					echo "Vous n'êtes pas administrateur";
+				}
+				?>
+
+			</article>
 
 		</div>
 
-		<!-- Sidebar -->
-		<section id="sidebar">
+		<!-- Footer -->
 
-			<!-- Intro -->
-			<section id="intro">
-				<a href="#" class="logo"><img src="images/logo.jpg" alt="" /></a>
-				<header>
-					<h2>Les bobos de Paris</h2>
-					<p>Le blog des bobos de Paris intra-muros</a></p>
-				</header>
-			</section>
-
-			
-
-			
-
-			<!-- About -->
-			<section class="blurb">
-				<h2>A prpopos</h2>
-				<p>Voila ma vie, mon oeuvre, et bla bla bla bla !!</p>
-				
-			</section>
-
-			<!-- Footer -->
-
-		</section>
 
 	</div>
 

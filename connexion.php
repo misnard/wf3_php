@@ -1,4 +1,8 @@
-<?php include('include/do_connexion.php');
+<?php 
+
+session_start();
+
+include('include/display_art_min.php');
 
 
 
@@ -18,9 +22,9 @@
 
 if(isset($_POST['singlebutton'])){
 
-    // Vérification que le champ FRUIT existe et n'est pas vide
+    // Vérification que le champ EMAIL existe et n'est pas vide
 	if(isset($_POST['email']) AND !empty($_POST['email'])){
-        // Vérification que le champ FRUIT soit conforme à la regex
+        // Vérification que le champ EMAIL soit conforme à la regex
 		if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
             // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
 			$errors[] = '<div class="alert alert-danger"><strong>Email non valide</strong></div>';
@@ -31,9 +35,9 @@ if(isset($_POST['singlebutton'])){
 	}
 
 
-    // Vérification que le champ COULEUR existe et n'est pas vide
+    // Vérification que le champ PASSWORD existe et n'est pas vide
 	if(isset($_POST['password']) AND !empty($_POST['password'])){
-        // Vérification que le champ COULEUR soit conforme à la regex
+        // Vérification que le champ PASSWORD soit conforme à la regex
 		if(!preg_match('#^[a-z \-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{3,30}$#i', $_POST['password'])){
             // Si le champ n'est pas conforme, on créer une erreur dans l'array $errors
 			$errors[] = '<div class="alert alert-danger"><strong>Mot de passe invalide</strong></div>';
@@ -46,25 +50,18 @@ if(isset($_POST['singlebutton'])){
 
 
 
-if(!isset($errors)){
+	if(!isset($errors)){
 
-	try {
-		$bdd= new PDO ('mysql:host=localhost;dbname=tp_php','root','');
+		include ('include/try_catch.php');
+
 		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch (PDOException $e)
-	{
-		echo 'Echec lors de la connexion : ' . $e->getMessage();
-	}
-
-	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
 
 
 
-		$email= htmlspecialchars($_POST['email']);		//preparation des variables des champs 
-		$password= htmlspecialchars($_POST['password']);
+		$email= ($_POST['email']);		//preparation des variables des champs 
+		$password= ($_POST['password']);
 
 
 		$response = $bdd->prepare("SELECT * FROM user WHERE email= ?"); // ? = correspond à l'array donc $_POST email
@@ -80,7 +77,19 @@ if(!isset($errors)){
 		if ($response->rowCount()==1) {
 
 			if (password_verify($password, $infos['password'] )) {   //si le password rentré correspond a celui de la base sauvegardé dans l'array grace au fetch
-			$success = '<div class="alert alert-success"><strong>Vous êtes connecté !</strong></div>';
+			$success = '<div class="alert alert-success"><strong>Vous êtes connecté ! <br><br> <a href="index.php">Retour à la page d\'accueil</a></strong></div>';
+			//Création de la session
+			$_SESSION['account'] = array(
+				'user' => $infos['uname'],
+				
+				'email' => $infos['email'],
+				'admin' => $infos['admin']
+				);
+
+			
+
+
+
 
 		}else{
 			$errors[] = '<div class="alert alert-warning"><strong>Mot de passe invalide</strong></div>';
@@ -94,6 +103,7 @@ if(!isset($errors)){
 
 }
 }
+
 
 
 
@@ -125,15 +135,11 @@ if(!isset($errors)){
 		<!-- Header -->
 		<header id="header">
 			<h1><a href="index.php">BLOG D'UNE BOBO</a></h1>
-			<nav class="links">
-				<ul>
-					<li><a href="connexion.php">Connexion</a></li>
-					<li><a href="inscription.php">Inscription</a></li>
-					<li><a href="profil.php">Profil</a></li>
-					<li><a href="#">Administration</a></li>
-					<li><a href="#">Déconnexion</a></li>
-				</ul>
-			</nav>
+			<?php 
+
+			include ('include/menu.php')
+
+			 ?>
 			<nav class="main">
 				<ul>
 					<li class="search">
@@ -161,32 +167,7 @@ if(!isset($errors)){
 
 			<!-- Links -->
 			<section>
-				<ul class="links">
-					<li>
-						<a href="#">
-							<h3>Lorem ipsum</h3>
-							<p>Feugiat tempus veroeros dolor</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>Dolor sit amet</h3>
-							<p>Sed vitae justo condimentum</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>Feugiat veroeros</h3>
-							<p>Phasellus sed ultricies mi congue</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h3>Etiam sed consequat</h3>
-							<p>Porta lectus amet ultricies</p>
-						</a>
-					</li>
-				</ul>
+				<?php display_articles_min(); ?>
 			</section>
 
 			<!-- Actions -->
@@ -233,6 +214,7 @@ if(!isset($errors)){
 			}
     // Si $success existe, on l'affiche
 			if(isset($success)){
+				echo 'Bienvenue '. htmlspecialchars($_SESSION['account']['user']).'!';
 				echo $success;
 			}
 			?>
